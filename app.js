@@ -53,7 +53,7 @@ const store = {
         'Japan',
         'China'
       ],
-      correctAnswer: 'green'
+      correctAnswer: 'China'
     },
   ],
   quizStarted: false,
