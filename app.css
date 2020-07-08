@@ -7,6 +7,6 @@
   *
 */
 
-div.container {
-  border: 2px black;
+div {
+  border: 2px solid black;  
 }
