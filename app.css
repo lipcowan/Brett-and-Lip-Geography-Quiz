@@ -7,6 +7,26 @@
   *
 */
 
-div {
+div {  
   border: 2px solid black;  
+  align-items: center;
+  width: 300px;
+}
+
+div.questions {
+  height: 100px;
+}
+
+div.answers {
+  height: 50;
+}
+
+h1 {
+  text-align: center;
+  width: 100%;
+}
+
+main {
+  display: flex;
+ 
 }

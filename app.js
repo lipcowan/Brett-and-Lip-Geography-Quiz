@@ -100,19 +100,27 @@ function main(){
 }
 
 let welcome = `
-<div class="container">
-  <div class="image">
-  <img height = 200px width = 200px src="images/welcome.jpg">
+<div class="box">
+  <div class="stats">
+    <p>Question# 1 of 5</p>
+    <p>Score: 4 right, 3 wrong</p>
   </div>
+  <div class="box"><img height = 200px width = 200px src="images/welcome.jpg"></div>
+  <div class="questions">questions</div>
+  <div class="answers">answers</div>
   <div>
     <button class="submit">Start Game!
     </button>
   </div>
+
 </div>
 `;
 
 function renderScreen(screenType){
-  $("h1").html("Our Game")
+  $("h1").html(`
+  <div>
+  Our Game
+  </div>`)
   $("main").html(screenType);
 
 }
