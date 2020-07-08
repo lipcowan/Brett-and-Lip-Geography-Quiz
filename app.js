@@ -56,3 +56,50 @@ const store = {
 /********** EVENT HANDLER FUNCTIONS **********/
 
 // These functions handle events (submit, click, etc)
+
+
+/* HTML WireFrame 
+
+
+function welcomeScreen 
+* submit button
+
+
+function QuestionScreen
+
+  function renderQuestions
+
+  *multiple choice question  ---- keyboard accessible 
+    *A
+    *B
+    *C
+    *D
+
+  * submit button 
+
+  function quizGrader --- intermediate determines question correctness
+    * correct answer --- "Congrats"
+    * incorrect answer -- "Sorry - the correct answer was X"
+  * pulling from a correctAnswers array
+
+
+  function runningScore  - desplayed on all question screens
+   * correct answers / index#
+
+
+  function endScreen
+  * final score
+  * "congrats yada yada"
+  * play again button
+  
+  
+** Variables ***********
+  
+Array of Question Objects  --- do we build a constructor like with LOTR?
+* [{question: "xxx", A: "x", B:"x", C:"x", D:"x", answer: "a-d"}, {question2 ...} ]
+
+currentQuestion
+
+currentScore
+
+  */
