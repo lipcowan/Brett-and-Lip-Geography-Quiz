@@ -3,27 +3,58 @@
  */
 const store = {
   // 5 or more questions are required
-  questions: [
+
+  questions: [  //theme: geography
     {
-      question: 'What color is broccoli?',
+      question: 'Which if the following is a country?',
       answers: [
-        'red',
-        'orange',
-        'pink',
-        'green'
+        'Illinois',
+        'Africa',
+        'Canada',
+        'Fred'
+      ],
+      correctAnswer: 'Canada'
+    },
+    {
+      question: 'What is the capital of New Hampshire?',
+      answers: [
+        'Manchester',
+        'Nashua',
+        'Concord',
+        'Istanbul'
+      ],
+      correctAnswer: 'Concord'
+    },
+    {
+      question: 'Which of these is a country AND a continent?',
+      answers: [
+        'Australia',
+        'Antarctica',
+        'North America',
+        'South America'
+      ],
+      correctAnswer: 'Australia'
+    },
+    {
+      question: 'Which Country is the largest? (area)',
+      answers: [
+        'USA',
+        'Canada',
+        'Russia',
+        'India'
+      ],
+      correctAnswer: 'Russia'
+    },
+    {
+      question: 'Which country has the largest population?',
+      answers: [
+        'India',
+        'Russia',
+        'Japan',
+        'China'
       ],
       correctAnswer: 'green'
     },
-    {
-      question: 'What is the current year?',
-      answers: [
-        '1970',
-        '2015',
-        '2019',
-        '2005'
-      ],
-      correctAnswer: '2019'
-    }
   ],
   quizStarted: false,
   questionNumber: 0,
@@ -96,7 +127,7 @@ function QuestionScreen
 ** Variables ***********
   
 Array of Question Objects  --- do we build a constructor like with LOTR?
-* [{question: "xxx", A: "x", B:"x", C:"x", D:"x", answer: "a-d"}, {question2 ...} ]
+
 
 currentQuestion
 
