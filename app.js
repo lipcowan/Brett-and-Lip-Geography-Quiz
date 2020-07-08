@@ -95,27 +95,27 @@ const store = {
 
 function main(){
 
+  renderScreen(welcome);
+
 }
 
-
-
-function welcomeScreen(){
-  $("h1").html("Our Game")
-  $("main").html(`
-  <div>
-    <img height = 200px width = 200px src="images/welcome.jpg">
-    <div>
-      <button class="submit">Start Game!
-      </button>
-    </div>
+let welcome = `
+<div class="container">
+  <div class="image">
+  <img height = 200px width = 200px src="images/welcome.jpg">
   </div>
-  `);
+  <div>
+    <button class="submit">Start Game!
+    </button>
+  </div>
+</div>
+`;
 
+function renderScreen(screenType){
+  $("h1").html("Our Game")
+  $("main").html(screenType);
 
 }
-// submit button
-welcomeScreen();
-
 
 $(main)
 /*

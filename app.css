@@ -7,3 +7,6 @@
   *
 */
 
+div.container {
+  border: 2px black;
+}
