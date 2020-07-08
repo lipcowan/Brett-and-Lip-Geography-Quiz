@@ -61,6 +61,8 @@ const store = {
   score: 0
 };
 
+
+
 /**
  * 
  * Technical requirements:
@@ -89,12 +91,34 @@ const store = {
 // These functions handle events (submit, click, etc)
 
 
-/* HTML WireFrame 
+/* HTML WireFrame */
+
+function main(){
+
+}
 
 
-function welcomeScreen 
-* submit button
 
+function welcomeScreen(){
+  $("h1").html("Our Game")
+  $("main").html(`
+  <div>
+    <img height = 200px width = 200px src="images/welcome.jpg">
+    <div>
+      <button class="submit">Start Game!
+      </button>
+    </div>
+  </div>
+  `);
+
+
+}
+// submit button
+welcomeScreen();
+
+
+$(main)
+/*
 
 function QuestionScreen
 
