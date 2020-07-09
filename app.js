@@ -1,15 +1,15 @@
 
 let questions = [  //theme: geography
   { //welcome screen
-    image: "image/welcome.jpg",
+    image: "images/welcome.jpg",
     question: "Welcome",
-    answers: ["", "", "", ""],
+    answers: ["1", "2", "3", "4"],
     correctAnswer: "",
     buttonText: "Start Game!"
 
   },
   { //question 1
-    image: "image1.jpg",
+    image: "images/canada.jpg",
     question: 'Which if the following is a country?',
     answers: [
       'Illinois',
@@ -18,9 +18,10 @@ let questions = [  //theme: geography
       'Fred'
     ],
     correctAnswer: 'Canada',
-    buttonText: "Subit"
+    buttonText: "Submit"
   },
-  {
+  {//question 2
+    image: "images/concord.jpg",
     question: 'What is the capital of New Hampshire?',
     answers: [
       'Manchester',
@@ -28,9 +29,11 @@ let questions = [  //theme: geography
       'Concord',
       'Istanbul'
     ],
-    correctAnswer: 'Concord'
+    correctAnswer: 'Concord',
+    buttonText: "Submit"
   },
-  {
+  {//question 3
+    image: "images/Australia.jpg",
     question: 'Which of these is a country AND a continent?',
     answers: [
       'Australia',
@@ -38,9 +41,11 @@ let questions = [  //theme: geography
       'North America',
       'South America'
     ],
-    correctAnswer: 'Australia'
+    correctAnswer: 'Australia',
+    buttonText: "Submit"
   },
-  {
+  {//question 4
+    image: "images/russia.jpg",
     question: 'Which Country is the largest? (area)',
     answers: [
       'USA',
@@ -48,9 +53,11 @@ let questions = [  //theme: geography
       'Russia',
       'India'
     ],
-    correctAnswer: 'Russia'
+    correctAnswer: 'Russia',
+    buttonText: "Submit"
   },
-  {
+  {//quation 5
+    image: "images/china.jpg",
     question: 'Which country has the largest population?',
     answers: [
       'India',
@@ -58,11 +65,10 @@ let questions = [  //theme: geography
       'Japan',
       'China'
     ],
-    correctAnswer: 'China'
-  },
+    correctAnswer: 'China',
+    buttonText: "Submit"
+  }
 ];
-
-
 
 const STORE = {
   quizStarted: false,
@@ -70,32 +76,41 @@ const STORE = {
   score: 0
 };
 
-
-
-
 function main() {
 
-  renderScreen(welcome);
+  renderScreen(template);
 
-}
+};
+let i = 3;
 
-
-let welcome = `
+let template = `
 <div class="box">
   <div class="stats">
-    <p>Question# 1 of 5</p>
-    <p>Score: 4 right, 3 wrong</p>
+    <p>Question# ${STORE.questionNumber} of ${questions.length}</p>
+    <p>Score: ${STORE.score}</p>
   </div>
-  <div class="box"><img height = 200px width = 200px src="${questions[0].image}"></div>
-  <div class="questions">questions</div>
-  <div class="answers">answers</div>
+  <div class="box"><img height = 200px width = 200px src="${questions[i].image}"></div>
+  <div class="question">${questions[i].question}</div>
+  <form>
+  <div class= "answers">
+  <input type="radio" id="male" name="gender" value="male">
+  <label for="male">${questions[i].answers[0]}</label><br>
+  <input type="radio" id="female" name="gender" value="female">
+  <label for="female">${questions[i].answers[1]}</label><br>
+  <input type="radio" id="other" name="gender" value="other">
+  <label for="other">${questions[i].answers[2]}</label>
+  <input type="radio" id="other" name="gender" value="other">
+  <label for="other">${questions[i].answers[3]}</label>
+  </div>
   <div>
-    <button class="submit">Start Game!
-    </button>
+  <button class="submit">${questions[i].buttonText}
+  </button>
   </div>
-
+  </form> 
 </div>
 `;
+
+
 
 function renderScreen(screenType) {
   $("h1").html(`
