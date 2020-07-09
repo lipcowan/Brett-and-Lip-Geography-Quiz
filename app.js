@@ -91,16 +91,24 @@ function main() {
 
 }
 
-let i = 3;
+let i = 0;
 
 $('html').on('click', 'button', function(event) {
   event.preventDefault();
+  let answer = $("input[name='option']:checked").val();
+  
+  if(!answer) {
+    alert('Please select an answer from below');
+  }
+  
+  else{ 
   console.log('worked', i);
+  console.log(grader(i,answer));
   if (i<questions.length-1) i++;
   else i = 0;
-  grader(i);
-  renderScreen(i);
 
+  renderScreen(i);
+  }
 });
 
 // ---
@@ -141,18 +149,23 @@ function renderScreen(i) {
   $('main').html(template);
 }
 
-function grader(i) {
-// loop through available answers, if selected answer == correctAnswer 
-// let score = form.querySelector('input[name="scores"]:checked').value;
-// if correct - display congrats box/alert and image
-var radioValue = $("input[name='option']:checked").val();
-if(radioValue){
-    alert("You've selected " + radioValue);
-// .text("radio","label") === questions[i].correctAnswer
 
-console.log(radioValue);
-// if incorrect - display the correct answer and image
-  return true;}
+
+
+
+
+function grader(i,answer) {
+console.log(answer, questions[i].correctAnswer);
+
+if (answer == questions[i].correctAnswer){
+  STORE.score += 1 ;
+  console.log(STORE.score);
+  alert("Correct!");
+}
+else {
+  alert(`Sorry the correct answer is: ${questions[i].correctAnswer}`);
+}
+  return (answer == questions[i].correctAnswer);
 // return true/false
 }
 
