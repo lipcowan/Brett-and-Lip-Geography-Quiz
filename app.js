@@ -67,6 +67,13 @@ let questions = [  //theme: geography
     ],
     correctAnswer: 'China',
     buttonText: "Submit"
+  },
+  {//end screen
+    image: "images/thatsall.jpg",
+    question: "The End! Click to play again!",
+    answers: ["","","",""],
+    correctAnswer: "",
+    buttonText: "Play again!"
   }
 ];
 
@@ -78,48 +85,60 @@ const STORE = {
 
 function main() {
 
-  renderScreen(template);
+  renderScreen(0);
 
 };
+
 let i = 3;
 
-let template = `
-<div class="box">
-  <div class="stats">
-    <p>Question# ${STORE.questionNumber} of ${questions.length}</p>
-    <p>Score: ${STORE.score}</p>
-  </div>
-  <div class="box"><img height = 200px width = 200px src="${questions[i].image}"></div>
-  <div class="question">${questions[i].question}</div>
-  <form>
-  <div class= "answers">
-  <input type="radio" id="male" name="gender" value="male">
-  <label for="male">${questions[i].answers[0]}</label><br>
-  <input type="radio" id="female" name="gender" value="female">
-  <label for="female">${questions[i].answers[1]}</label><br>
-  <input type="radio" id="other" name="gender" value="other">
-  <label for="other">${questions[i].answers[2]}</label>
-  <input type="radio" id="other" name="gender" value="other">
-  <label for="other">${questions[i].answers[3]}</label>
-  </div>
-  <div>
-  <button class="submit">${questions[i].buttonText}
-  </button>
-  </div>
-  </form> 
-</div>
-`;
+$("html").on("click", "button", function(event) {
+  event.preventDefault();
+  console.log("worked", i);
+if (i<questions.length-1) i++;
+else i = 0;
+renderScreen(i);
+
+});
 
 
+function renderScreen(i) {
 
-function renderScreen(screenType) {
   $("h1").html(`
   <div>
   Our Game
   </div>`)
-  $("main").html(screenType);
 
-}
+  const template = `
+  <div class="box">
+    <div class="stats">
+      <p>Question# ${i} of ${questions.length-1}</p>
+      <p>Score: ${STORE.score}</p>
+    </div>
+    <div class="box"><img height = 300px width = 300px src="${questions[i].image}"></div>
+    <div class="question">${questions[i].question}</div>
+  <form>
+    <div class= "answers">
+      <input type="radio" id="male" name="gender" value="male">
+      <label for="male">${questions[i].answers[0]}</label><br>
+      <input type="radio" id="female" name="gender" value="female">
+      <label for="female">${questions[i].answers[1]}</label><br>
+      <input type="radio" id="other" name="gender" value="other">
+      <label for="other">${questions[i].answers[2]}</label>
+      <input type="radio" id="other" name="gender" value="other">
+      <label for="other">${questions[i].answers[3]}</label>
+    </div>
+    <div>
+      <button class="submit">${questions[i].buttonText}
+      </button>
+    </div>
+  </form> 
+</div>`;
+
+$("main").html(template);
+};
+
+
+
 
 $(main)
 /*
