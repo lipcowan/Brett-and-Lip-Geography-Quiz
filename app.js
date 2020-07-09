@@ -1,15 +1,17 @@
+/* eslint-disable no-undef */
+'use strict';
 
 let questions = [  //theme: geography
   { //welcome screen
-    image: "images/welcome.jpg",
-    question: "Welcome",
-    answers: ["1", "2", "3", "4"],
-    correctAnswer: "",
-    buttonText: "Start Game!"
+    image: 'images/welcome.jpg',
+    question: 'Welcome',
+    answers: ['1', '2', '3', '4'],
+    correctAnswer: '',
+    buttonText: 'Start Game!'
 
   },
   { //question 1
-    image: "images/canada.jpg",
+    image: 'images/canada.jpg',
     question: 'Which if the following is a country?',
     answers: [
       'Illinois',
@@ -18,10 +20,10 @@ let questions = [  //theme: geography
       'Fred'
     ],
     correctAnswer: 'Canada',
-    buttonText: "Submit"
+    buttonText: 'Submit'
   },
   {//question 2
-    image: "images/concord.jpg",
+    image: 'images/concord.jpg',
     question: 'What is the capital of New Hampshire?',
     answers: [
       'Manchester',
@@ -30,10 +32,10 @@ let questions = [  //theme: geography
       'Istanbul'
     ],
     correctAnswer: 'Concord',
-    buttonText: "Submit"
+    buttonText: 'Submit'
   },
   {//question 3
-    image: "images/Australia.jpg",
+    image: 'images/Australia.jpg',
     question: 'Which of these is a country AND a continent?',
     answers: [
       'Australia',
@@ -42,10 +44,10 @@ let questions = [  //theme: geography
       'South America'
     ],
     correctAnswer: 'Australia',
-    buttonText: "Submit"
+    buttonText: 'Submit'
   },
   {//question 4
-    image: "images/russia.jpg",
+    image: 'images/russia.jpg',
     question: 'Which Country is the largest? (area)',
     answers: [
       'USA',
@@ -54,10 +56,10 @@ let questions = [  //theme: geography
       'India'
     ],
     correctAnswer: 'Russia',
-    buttonText: "Submit"
+    buttonText: 'Submit'
   },
   {//quation 5
-    image: "images/china.jpg",
+    image: 'images/china.jpg',
     question: 'Which country has the largest population?',
     answers: [
       'India',
@@ -66,14 +68,14 @@ let questions = [  //theme: geography
       'China'
     ],
     correctAnswer: 'China',
-    buttonText: "Submit"
+    buttonText: 'Submit'
   },
   {//end screen
-    image: "images/thatsall.jpg",
-    question: "The End! Click to play again!",
-    answers: ["","","",""],
-    correctAnswer: "",
-    buttonText: "Play again!"
+    image: 'images/thatsall.jpg',
+    question: 'The End! Click to play again!',
+    answers: ['','','',''],
+    correctAnswer: '',
+    buttonText: 'Play again!'
   }
 ];
 
@@ -82,31 +84,33 @@ const STORE = {
   questionNumber: 0,
   score: 0
 };
-
+// -----
 function main() {
 
   renderScreen(0);
 
-};
+}
 
 let i = 3;
 
-$("html").on("click", "button", function(event) {
+$('html').on('click', 'button', function(event) {
   event.preventDefault();
-  console.log("worked", i);
-if (i<questions.length-1) i++;
-else i = 0;
-renderScreen(i);
+  console.log('worked', i);
+  if (i<questions.length-1) i++;
+  else i = 0;
+  grader(i);
+  renderScreen(i);
 
 });
 
+// ---
 
 function renderScreen(i) {
 
-  $("h1").html(`
+  $('h1').html(`
   <div>
   Our Game
-  </div>`)
+  </div>`);
 
   const template = `
   <div class="box">
@@ -118,13 +122,13 @@ function renderScreen(i) {
     <div class="question">${questions[i].question}</div>
   <form>
     <div class= "answers">
-      <input type="radio" id="male" name="gender" value="male">
+      <input type="radio" id="optionA" name="option" value="${questions[i].answers[0]}">
       <label for="male">${questions[i].answers[0]}</label><br>
-      <input type="radio" id="female" name="gender" value="female">
+      <input type="radio" id="optionB" name="option" value="${questions[i].answers[1]}">
       <label for="female">${questions[i].answers[1]}</label><br>
-      <input type="radio" id="other" name="gender" value="other">
+      <input type="radio" id="optionC" name="option" value="${questions[i].answers[2]}">
       <label for="other">${questions[i].answers[2]}</label>
-      <input type="radio" id="other" name="gender" value="other">
+      <input type="radio" id="optionD" name="option" value="${questions[i].answers[3]}">
       <label for="other">${questions[i].answers[3]}</label>
     </div>
     <div>
@@ -134,13 +138,29 @@ function renderScreen(i) {
   </form> 
 </div>`;
 
-$("main").html(template);
-};
+  $('main').html(template);
+}
+
+function grader(i) {
+// loop through available answers, if selected answer == correctAnswer 
+// let score = form.querySelector('input[name="scores"]:checked').value;
+// if correct - display congrats box/alert and image
+var radioValue = $("input[name='option']:checked").val();
+if(radioValue){
+    alert("You've selected " + radioValue);
+// .text("radio","label") === questions[i].correctAnswer
+
+console.log(radioValue);
+// if incorrect - display the correct answer and image
+  return true;}
+// return true/false
+}
+
+$(main);
 
 
 
 
-$(main)
 /*
 
 function QuestionScreen
