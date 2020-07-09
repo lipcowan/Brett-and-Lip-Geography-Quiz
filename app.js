@@ -86,7 +86,11 @@ const STORE = {
 };
 // -----
 function main() {
-
+    // we will need a switch/case function here.
+      // if i = 0 render welcome screen
+      // if 1 < i > questions.length render questions
+      // if last page, render end of game screen 
+    //will prevent some conflicts I am anticipating. just noting for now.
   renderScreen(0);
 
 }
