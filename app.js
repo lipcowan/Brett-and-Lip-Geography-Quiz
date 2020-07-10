@@ -85,6 +85,11 @@ const STORE = {
   score: 0
 };
 
+// we will need a switch/case function here.
+  // if i = 0 render welcome screen
+  // if 1 < i > questions.length render questions
+  // if last page, render end of game screen 
+  //will prevent some conflicts I am anticipating. just noting for now.
 
 
 // -----
@@ -92,17 +97,13 @@ function main() {
 
   let i = 3;
 
-
-  // we will need a switch/case function here.
-  // if i = 0 render welcome screen
-  // if 1 < i > questions.length render questions
-  // if last page, render end of game screen 
-  //will prevent some conflicts I am anticipating. just noting for now.
-  renderScreen(i);
-
+  render(i);
+  buttonClickingHandler();
 }
 
-$('html').on('click', 'button', function (event) {
+
+function buttonClickingHandler()
+{ $('html').on('click', 'button', function (event) {
   event.preventDefault();
 
 
@@ -120,17 +121,32 @@ $('html').on('click', 'button', function (event) {
 
 
     //if button set to answer question:
-    renderScreen(i);
+    render(i);
     //else
     renderAnswer(i);
     
   }
 });
+}
 
 // ---
 
-function renderScreen(i) {
-  const questionTemplate = `
+function getWelcome() {
+  const welcomeScreen = `<div class="box">
+  <div class="pictureBox"><img height = 300px width = 300px src="images/welcome.jpg"></div>
+  <form>
+  <div>
+    <button class="submit">Start Game!
+    </button>
+  </div>
+</form> 
+</div>`;
+
+return welcomeScreen;
+}
+
+function getQuestion(i) {
+const questionTemplate = `
 <div class="box">
   <div class="stats">
     <p>Question# ${i} of ${questions.length - 1}</p>
@@ -155,19 +171,44 @@ function renderScreen(i) {
   </div>
 </form> 
 </div>`;
+return questionTemplate;
+}
 
-  const answerTemplate = `<div class="pictureBox"><img height = 300px width = 300px src="${questions[i].image}">The correct answer is ${questions[i].correctAnswer}</div>`
+function getAnswer(i) {
+  const answerTemplate = `<div class="pictureBox">
+  <img height = 300px width = 300px src="${questions[i].image}">
+  The correct answer is ${questions[i].correctAnswer}</div>`;
+  return answerTemplate; 
+}
 
-  $('h1').html(`<div>Our Game</div>`);
+function getEnd() {
+  const endScreen = `
+  <div class="box">
+    <div class="stats">
+      <p>Score: ${STORE.score}</p>
+    </div>
+    <div class="pictureBox"><img height = 300px width = 300px src="images/thatsall.jpg"></div>
+    <div class="question">Congratulations! You've completed the quiz.</div>
+  <form>
+    <div>
+      <button class="submit">Start Over?
+      </button>
+    </div>
+  </form> 
+  </div>`;
+  return endScreen;
+}
 
-  $('main').html(questionTemplate);
+function render(i,screen) {
+  
+  $('h1').html(`<div>Geography Quiz</div>`);
+
+  $('main').html();
  }
 
- function renderAnswer(i){
-  const answerTemplate = `<div class="pictureBox"><img height = 300px width = 300px src="${questions[i].image}">The correct answer is ${questions[i].correctAnswer}</div>`
-
-  $('.pictureBox').html(answerTemplate);
- }
+ 
+ // $('.pictureBox').html(answerTemplate);
+ 
 
 function grader(i, answer) {
   console.log(answer, questions[i].correctAnswer);
