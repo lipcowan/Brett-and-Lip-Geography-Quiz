@@ -95,7 +95,7 @@ const STORE = {
 // -----
 function main() {
 
-  let i = 3;
+  let i = 0;
 
   render(i);
   buttonClickingHandler();
@@ -105,7 +105,6 @@ function main() {
 function buttonClickingHandler()
 { $('html').on('click', 'button', function (event) {
   event.preventDefault();
-
 
   let answer = $("input[name='option']:checked").val();
 
@@ -118,13 +117,10 @@ function buttonClickingHandler()
     console.log(grader(i, answer));
     if (i < questions.length - 1) i++;
     else i = 0;
-
-
-    //if button set to answer question:
-    render(i);
-    //else
-    renderAnswer(i);
     
+    
+    render(i, "welcome");
+   
   }
 });
 }
@@ -202,6 +198,25 @@ function getEnd() {
 function render(i,screen) {
   
   $('h1').html(`<div>Geography Quiz</div>`);
+  switch (screen){
+    case "welcome":
+      $('main').html(getWelcome(i));
+      break;
+    case "question":
+      $('main').html(getQuestion(i));
+      break;
+    case "answer":
+      $('.pictureBox').html(getAnswer(i));
+      break;
+    case "end":
+      $('main').html(getEnd(i));
+      break;
+    default:
+      $('main').html(getWelcome(i));
+      break;
+  }
+  
+
 
   $('main').html();
  }
