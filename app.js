@@ -73,7 +73,7 @@ let questions = [  //theme: geography
   {//end screen
     image: 'images/thatsall.jpg',
     question: 'The End! Click to play again!',
-    answers: ['','','',''],
+    answers: ['', '', '', ''],
     correctAnswer: '',
     buttonText: 'Play again!'
   }
@@ -84,93 +84,104 @@ const STORE = {
   questionNumber: 0,
   score: 0
 };
+
+
+
 // -----
 function main() {
-    // we will need a switch/case function here.
-      // if i = 0 render welcome screen
-      // if 1 < i > questions.length render questions
-      // if last page, render end of game screen 
-    //will prevent some conflicts I am anticipating. just noting for now.
-  renderScreen(0);
+
+  let i = 3;
+
+
+  // we will need a switch/case function here.
+  // if i = 0 render welcome screen
+  // if 1 < i > questions.length render questions
+  // if last page, render end of game screen 
+  //will prevent some conflicts I am anticipating. just noting for now.
+  renderScreen(i);
 
 }
 
-let i = 0;
-
-$('html').on('click', 'button', function(event) {
+$('html').on('click', 'button', function (event) {
   event.preventDefault();
+
+
   let answer = $("input[name='option']:checked").val();
-  
-  if(!answer) {
+
+  if (!answer) {
     alert('Please select an answer from below');
   }
-  
-  else{ 
-  console.log('worked', i);
-  console.log(grader(i,answer));
-  if (i<questions.length-1) i++;
-  else i = 0;
 
-  renderScreen(i);
+  else {
+    console.log('worked', i);
+    console.log(grader(i, answer));
+    if (i < questions.length - 1) i++;
+    else i = 0;
+
+
+    //if button set to answer question:
+    renderScreen(i);
+    //else
+    renderAnswer(i);
+    
   }
 });
 
 // ---
 
 function renderScreen(i) {
-
-  $('h1').html(`
+  const questionTemplate = `
+<div class="box">
+  <div class="stats">
+    <p>Question# ${i} of ${questions.length - 1}</p>
+    <p>Score: ${STORE.score}</p>
+  </div>
+  <div class="pictureBox"><img height = 300px width = 300px src="images/question.jpg"></div>
+  <div class="question">${questions[i].question}</div>
+<form>
+  <div class= "answers">
+    <input type="radio" id="optionA" name="option" value="${questions[i].answers[0]}">
+    <label for="male">${questions[i].answers[0]}</label><br>
+    <input type="radio" id="optionB" name="option" value="${questions[i].answers[1]}">
+    <label for="female">${questions[i].answers[1]}</label><br>
+    <input type="radio" id="optionC" name="option" value="${questions[i].answers[2]}">
+    <label for="other">${questions[i].answers[2]}</label>
+    <input type="radio" id="optionD" name="option" value="${questions[i].answers[3]}">
+    <label for="other">${questions[i].answers[3]}</label>
+  </div>
   <div>
-  Our Game
-  </div>`);
-
-  const template = `
-  <div class="box">
-    <div class="stats">
-      <p>Question# ${i} of ${questions.length-1}</p>
-      <p>Score: ${STORE.score}</p>
-    </div>
-    <div class="box"><img height = 300px width = 300px src="${questions[i].image}"></div>
-    <div class="question">${questions[i].question}</div>
-  <form>
-    <div class= "answers">
-      <input type="radio" id="optionA" name="option" value="${questions[i].answers[0]}">
-      <label for="male">${questions[i].answers[0]}</label><br>
-      <input type="radio" id="optionB" name="option" value="${questions[i].answers[1]}">
-      <label for="female">${questions[i].answers[1]}</label><br>
-      <input type="radio" id="optionC" name="option" value="${questions[i].answers[2]}">
-      <label for="other">${questions[i].answers[2]}</label>
-      <input type="radio" id="optionD" name="option" value="${questions[i].answers[3]}">
-      <label for="other">${questions[i].answers[3]}</label>
-    </div>
-    <div>
-      <button class="submit">${questions[i].buttonText}
-      </button>
-    </div>
-  </form> 
+    <button class="submit">${questions[i].buttonText}
+    </button>
+  </div>
+</form> 
 </div>`;
 
-  $('main').html(template);
-}
+  const answerTemplate = `<div class="pictureBox"><img height = 300px width = 300px src="${questions[i].image}">The correct answer is ${questions[i].correctAnswer}</div>`
 
+  $('h1').html(`<div>Our Game</div>`);
 
+  $('main').html(questionTemplate);
+ }
 
+ function renderAnswer(i){
+  const answerTemplate = `<div class="pictureBox"><img height = 300px width = 300px src="${questions[i].image}">The correct answer is ${questions[i].correctAnswer}</div>`
 
+  $('.pictureBox').html(answerTemplate);
+ }
 
+function grader(i, answer) {
+  console.log(answer, questions[i].correctAnswer);
 
-function grader(i,answer) {
-console.log(answer, questions[i].correctAnswer);
-
-if (answer == questions[i].correctAnswer){
-  STORE.score += 1 ;
-  console.log(STORE.score);
-  alert("Correct!");
-}
-else {
-  alert(`Sorry the correct answer is: ${questions[i].correctAnswer}`);
-}
+  if (answer == questions[i].correctAnswer) {
+    STORE.score += 1;
+    console.log(STORE.score);
+    alert("Correct!");
+  }
+  else {
+    alert(`Sorry the correct answer is: ${questions[i].correctAnswer}`);
+  }
   return (answer == questions[i].correctAnswer);
-// return true/false
+  // return true/false
 }
 
 $(main);
