@@ -86,43 +86,53 @@ const STORE = {
 };
 
 // we will need a switch/case function here.
-  // if i = 0 render welcome screen
-  // if 1 < i > questions.length render questions
-  // if last page, render end of game screen 
-  //will prevent some conflicts I am anticipating. just noting for now.
+// if i = 0 render welcome screen
+// if 1 < i > questions.length render questions
+// if last page, render end of game screen 
+//will prevent some conflicts I am anticipating. just noting for now.
 
 
 // -----
+let i = 0;
 function main() {
 
-  let i = 0;
-
-  render(i);
+  render(i, "question")
   buttonClickingHandler();
 }
 
+let nextScreen = true;
 
-function buttonClickingHandler()
-{ $('html').on('click', 'button', function (event) {
-  event.preventDefault();
 
-  let answer = $("input[name='option']:checked").val();
+function buttonClickingHandler() {
+  $('html').on('click', 'button', function (event) {
+    event.preventDefault();
 
-  if (!answer) {
-    alert('Please select an answer from below');
-  }
+  
+    let answer = $("input[name='option']:checked").val();
+      
 
-  else {
-    console.log('worked', i);
-    console.log(grader(i, answer));
-    if (i < questions.length - 1) i++;
-    else i = 0;
-    
-    
-    render(i, "welcome");
-   
-  }
-});
+    if (!answer && i > 0 && i < questions.length ) {
+      alert('Please select an answer from below');
+    }
+
+    else {
+      console.log('worked', i);
+      console.log(grader(i, answer));
+
+      if (nextScreen) {
+        if (i < questions.length - 1) i++;
+        else i = 0;
+        render(i, "question");
+        nextScreen = false;
+      }
+      else {
+        render(i, "answer")
+        nextScreen = true;
+      }
+
+
+    }
+  });
 }
 
 // ---
@@ -138,11 +148,11 @@ function getWelcome() {
 </form> 
 </div>`;
 
-return welcomeScreen;
+  return welcomeScreen;
 }
 
 function getQuestion(i) {
-const questionTemplate = `
+  const questionTemplate = `
 <div class="box">
   <div class="stats">
     <p>Question# ${i} of ${questions.length - 1}</p>
@@ -167,14 +177,36 @@ const questionTemplate = `
   </div>
 </form> 
 </div>`;
-return questionTemplate;
+  return questionTemplate;
 }
 
 function getAnswer(i) {
-  const answerTemplate = `<div class="pictureBox">
-  <img height = 300px width = 300px src="${questions[i].image}">
-  The correct answer is ${questions[i].correctAnswer}</div>`;
-  return answerTemplate; 
+  const answerTemplate = `
+  <div class="box">
+    <div class="stats">
+      <p>Question# ${i} of ${questions.length - 1}</p>
+      <p>Score: ${STORE.score}</p>
+    </div>
+    <div class="pictureBox"><img height = 300px width = 300px src="${questions[i].correctAnswer}"></div>
+    <div class="question">${questions[i].question}</div>
+  <form>
+    <div class= "answers">
+      <input type="radio" id="optionA" name="option" value="${questions[i].answers[0]}" disabled>
+      <label for="male">${questions[i].answers[0]}</label><br>
+      <input type="radio" id="optionB" name="option" value="${questions[i].answers[1]}" disabled>
+      <label for="female">${questions[i].answers[1]}</label><br>
+      <input type="radio" id="optionC" name="option" value="${questions[i].answers[2]}" disabled>
+      <label for="other">${questions[i].answers[2]}</label>
+      <input type="radio" id="optionD" name="option" value="${questions[i].answers[3]}" disabled>
+      <label for="other">${questions[i].answers[3]}</label>
+    </div>
+    <div>
+      <button class="submit">${questions[i].buttonText}
+      </button>
+    </div>
+  </form> 
+  </div>`
+  return answerTemplate;
 }
 
 function getEnd() {
@@ -195,10 +227,10 @@ function getEnd() {
   return endScreen;
 }
 
-function render(i,screen) {
-  
+function render(i, screen) {
+
   $('h1').html(`<div>Geography Quiz</div>`);
-  switch (screen){
+  switch (screen) {
     case "welcome":
       $('main').html(getWelcome(i));
       break;
@@ -206,7 +238,7 @@ function render(i,screen) {
       $('main').html(getQuestion(i));
       break;
     case "answer":
-      $('.pictureBox').html(getAnswer(i));
+      $('main').html(getAnswer(i));
       break;
     case "end":
       $('main').html(getEnd(i));
@@ -215,26 +247,26 @@ function render(i,screen) {
       $('main').html(getWelcome(i));
       break;
   }
-  
+
 
 
   $('main').html();
- }
+}
 
- 
- // $('.pictureBox').html(answerTemplate);
- 
+
+// $('.pictureBox').html(answerTemplate);
+
 
 function grader(i, answer) {
   console.log(answer, questions[i].correctAnswer);
 
   if (answer == questions[i].correctAnswer) {
-    STORE.score += 1;
+    STORE.score = STORE.score + 1;
     console.log(STORE.score);
-    alert("Correct!");
+    //alert("Correct!");
   }
   else {
-    alert(`Sorry the correct answer is: ${questions[i].correctAnswer}`);
+    //alert(`Sorry the correct answer is: ${questions[i].correctAnswer}`);
   }
   return (answer == questions[i].correctAnswer);
   // return true/false
