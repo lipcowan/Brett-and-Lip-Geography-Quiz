@@ -24,7 +24,7 @@ let questions = [  //theme: geography
   },
   {//question 2
     image: 'images/concord.jpg',
-    question: 'What is the capital of New Hampshire?'
+    question: 'What is the capital of New Hampshire?',
     answers: [
       'Manchester',
       'Nashua',
