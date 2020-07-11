@@ -98,12 +98,9 @@ function main() {
 function buttonClickingHandler() {
   $('html').on('click', 'button', function (event) {
     event.preventDefault();
-
-  
     let answer = $("input[name='option']:checked").val();
-      
 
-    if (!answer && i > 0 && i < questions.length -1 && answerScreen == false) { // if no answer
+    if (!answer && i > 0 && i < questions.length - 2 && answerScreen == false) { // if no answer
       alert('Please select an answer from below');
     }
     else if (i == 0){ // if on welcome screen
@@ -112,8 +109,8 @@ function buttonClickingHandler() {
       answerScreen = false;
 
     }
-    else if (i == questions.length-1){ //if on end screen
-      grader(i,answer);
+    else if (i == questions.length - 2 && !answer){ //if on end screen
+      //grader(i,answer);
       render(i, 'end');
       answerScreen = false;
       i = 0;
@@ -251,6 +248,7 @@ function getEnd() {
   const endScreen = `
   <div class="box">
     <div class="stats">
+      <p></p>
       <p>Score: ${STORE.score}/${questions.length -2}</p>
     </div>
     <div class="pictureBox"><img height = 300px width = 300px src="images/thatsall.jpg"></div>
