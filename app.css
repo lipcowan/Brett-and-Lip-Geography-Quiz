@@ -7,6 +7,9 @@
   *
 */
 
+
+
+
 div {  
   border: 2px solid black;  
   justify-content: space-evenly;
@@ -17,7 +20,6 @@ div {
 div.box {
   display: block;
   align-content: center;
-  vertical-align: auto;
   align-self: center;
 }
 
@@ -34,6 +36,9 @@ div.answers {
 h1 {
   text-align: center;
   width: 100%;
+  color: #ffffff;
+  background-color: #000;
+  letter-spacing: 2px;
 }
 
 html {
@@ -43,6 +48,15 @@ html {
   vertical-align: auto;
   align-self: center;
 }
+
+.correct {
+  background-color: rgb(66, 163, 82);
+}
+
+.incorrect {
+  background-color: rgb(230, 98, 98);
+}
+
 
 @media all AND (min-width: 600px) {
 

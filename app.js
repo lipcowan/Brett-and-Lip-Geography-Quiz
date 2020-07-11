@@ -182,7 +182,7 @@ function getQuestion(i) {
   return questionTemplate;
 }
 
-function getAnswer(i) {
+function getRightAnswer(i) {
   const answerTemplate = `
   <div class="box">
     <div class="stats">
@@ -190,7 +190,7 @@ function getAnswer(i) {
       <p>Score: ${STORE.score}</p>
     </div>
     <div class="pictureBox"><img height = 300px width = 300px src="${questions[i].image}"></div>
-    <div class="question">The correct answer was ${questions[i].correctAnswer}</div>
+    <div class="question correct">The correct answer was ${questions[i].correctAnswer}</div>
   <form>
     <div class= "answers">
       <input type="radio" id="optionA" name="option" value="${questions[i].answers[0]}" disabled>
@@ -210,6 +210,39 @@ function getAnswer(i) {
   </div>`
   return answerTemplate;
 }
+
+function getWrongAnswer(i) {
+  const answerTemplate = `
+  <div class="box">
+    <div class="stats">
+      <p>Question# ${i} of ${questions.length - 2}</p>
+      <p>Score: ${STORE.score}</p>
+    </div>
+    <div class="pictureBox"><img height = 300px width = 300px src="${questions[i].image}"></div>
+    <div class="question incorrect">The correct answer was ${questions[i].correctAnswer}</div>
+  <form>
+    <div class= "answers">
+      <input type="radio" id="optionA" name="option" value="${questions[i].answers[0]}" disabled>
+      <label for="male">${questions[i].answers[0]}</label><br>
+      <input type="radio" id="optionB" name="option" value="${questions[i].answers[1]}" disabled >
+      <label for="female">${questions[i].answers[1]}</label><br>
+      <input type="radio" id="optionC" name="option" value="${questions[i].answers[2]}" disabled>
+      <label for="other">${questions[i].answers[2]}</label>
+      <input type="radio" id="optionD" name="option" value="${questions[i].answers[3]}" disabled>
+      <label for="other">${questions[i].answers[3]}</label>
+    </div>
+    <div>
+      <button class="submit">Next Question
+      </button>
+    </div>
+  </form> 
+  </div>`
+  return answerTemplate;
+}
+
+
+
+
 
 function getEnd() {
   const endScreen = `
@@ -239,8 +272,11 @@ function render(i, screen) {
     case "question":
       $('main').html(getQuestion(i));
       break;
-    case "answer":
-      $('main').html(getAnswer(i));
+    case "correct answer":
+      $('main').html(getRightAnswer(i));
+      break;
+    case "incorrect answer":
+      $('main').html(getWrongAnswer(i));
       break;
     case "end":
       $('main').html(getEnd(i));
