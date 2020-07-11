@@ -85,23 +85,15 @@ const STORE = {
   score: 0
 };
 
-// we will need a switch/case function here.
-// if i = 0 render welcome screen
-// if 1 < i > questions.length render questions
-// if last page, render end of game screen 
-//will prevent some conflicts I am anticipating. just noting for now.
-
-
-// -----
 let i = 0;
+let answerScreen = false;
+// -----
+
 function main() {
 
-  render(i, "question")
+  render(i, "welcome")
   buttonClickingHandler();
 }
-
-let nextScreen = true;
-
 
 function buttonClickingHandler() {
   $('html').on('click', 'button', function (event) {
@@ -111,25 +103,33 @@ function buttonClickingHandler() {
     let answer = $("input[name='option']:checked").val();
       
 
-    if (!answer && i > 0 && i < questions.length ) {
+    if (!answer && i > 0 && i < questions.length -1 && answerScreen == false) { // if no answer
       alert('Please select an answer from below');
     }
+    else if (i == 0){ // if on welcome screen
+      i++;
+      render(i, "question");
+      answerScreen = false;
 
+    }
+    else if (i == questions.length-1){ //if on end screen
+      i = 0;
+      render(i, 'welcome');
+      answerScreen = false;
+    }
     else {
       console.log('worked', i);
       console.log(grader(i, answer));
 
-      if (nextScreen) {
-        if (i < questions.length - 1) i++;
-        else i = 0;
-        render(i, "question");
-        nextScreen = false;
-      }
+      if (answerScreen) {
+          i++;
+          render(i, "question");
+          answerScreen = false;
+       }
       else {
         render(i, "answer")
-        nextScreen = true;
+        answerScreen = true;
       }
-
 
     }
   });
@@ -155,7 +155,7 @@ function getQuestion(i) {
   const questionTemplate = `
 <div class="box">
   <div class="stats">
-    <p>Question# ${i} of ${questions.length - 1}</p>
+    <p>Question# ${i} of ${questions.length - 2}</p>
     <p>Score: ${STORE.score}</p>
   </div>
   <div class="pictureBox"><img height = 300px width = 300px src="images/question.jpg"></div>
@@ -184,16 +184,16 @@ function getAnswer(i) {
   const answerTemplate = `
   <div class="box">
     <div class="stats">
-      <p>Question# ${i} of ${questions.length - 1}</p>
+      <p>Question# ${i} of ${questions.length - 2}</p>
       <p>Score: ${STORE.score}</p>
     </div>
-    <div class="pictureBox"><img height = 300px width = 300px src="${questions[i].correctAnswer}"></div>
-    <div class="question">${questions[i].question}</div>
+    <div class="pictureBox"><img height = 300px width = 300px src="${questions[i].image}"></div>
+    <div class="question">The correct answer was ${questions[i].correctAnswer}</div>
   <form>
     <div class= "answers">
       <input type="radio" id="optionA" name="option" value="${questions[i].answers[0]}" disabled>
       <label for="male">${questions[i].answers[0]}</label><br>
-      <input type="radio" id="optionB" name="option" value="${questions[i].answers[1]}" disabled>
+      <input type="radio" id="optionB" name="option" value="${questions[i].answers[1]}" disabled >
       <label for="female">${questions[i].answers[1]}</label><br>
       <input type="radio" id="optionC" name="option" value="${questions[i].answers[2]}" disabled>
       <label for="other">${questions[i].answers[2]}</label>
@@ -201,7 +201,7 @@ function getAnswer(i) {
       <label for="other">${questions[i].answers[3]}</label>
     </div>
     <div>
-      <button class="submit">${questions[i].buttonText}
+      <button class="submit">Next Question
       </button>
     </div>
   </form> 
