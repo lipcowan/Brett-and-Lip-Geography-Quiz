@@ -24,7 +24,7 @@ let questions = [  //theme: geography
   },
   {//question 2
     image: 'images/concord.jpg',
-    question: 'What is the capital of New Hampshire?',
+    question: 'What is the capital of New Hampshire?'
     answers: [
       'Manchester',
       'Nashua',
@@ -35,7 +35,7 @@ let questions = [  //theme: geography
     buttonText: 'Submit'
   },
   {//question 3
-    image: 'images/Australia.jpg',
+    image: 'images/australia.jpg',
     question: 'Which of these is a country AND a continent?',
     answers: [
       'Australia',
