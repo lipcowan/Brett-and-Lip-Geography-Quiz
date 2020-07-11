@@ -121,7 +121,7 @@ function buttonClickingHandler() {
     }
     else {
       console.log('worked', i);
-      console.log(grader(i, answer));
+      let rightWrong = (grader(i, answer));
 
       if (answerScreen) {
           i++;
@@ -129,7 +129,8 @@ function buttonClickingHandler() {
           answerScreen = false;
        }
       else {
-        render(i, "answer")
+        if (rightWrong) render(i, "correct");
+        else render(i, "incorrect");
         answerScreen = true;
       }
 
@@ -272,10 +273,10 @@ function render(i, screen) {
     case "question":
       $('main').html(getQuestion(i));
       break;
-    case "correct answer":
+    case "correct":
       $('main').html(getRightAnswer(i));
       break;
-    case "incorrect answer":
+    case "incorrect":
       $('main').html(getWrongAnswer(i));
       break;
     case "end":
