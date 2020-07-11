@@ -165,13 +165,13 @@ function getQuestion(i) {
 <form>
   <div class= "answers">
     <input type="radio" id="optionA" name="option" value="${questions[i].answers[0]}">
-    <label for="male">${questions[i].answers[0]}</label><br>
+    <label for="male"> ${questions[i].answers[0]} </label><br>
     <input type="radio" id="optionB" name="option" value="${questions[i].answers[1]}">
-    <label for="female">${questions[i].answers[1]}</label><br>
+    <label for="female"> ${questions[i].answers[1]} </label><br>
     <input type="radio" id="optionC" name="option" value="${questions[i].answers[2]}">
-    <label for="other">${questions[i].answers[2]}</label>
+    <label for="other"> ${questions[i].answers[2]} </label>
     <input type="radio" id="optionD" name="option" value="${questions[i].answers[3]}">
-    <label for="other">${questions[i].answers[3]}</label>
+    <label for="other"> ${questions[i].answers[3]} </label>
   </div>
   <div>
     <button class="submit">${questions[i].buttonText}

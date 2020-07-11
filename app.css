@@ -9,8 +9,16 @@
 
 div {  
   border: 2px solid black;  
-  align-items: center;
-  width: 300px;
+  justify-content: space-evenly;
+  display: flex;
+  width: 420px;
+}
+
+div.box {
+  display: block;
+  align-content: center;
+  vertical-align: auto;
+  align-self: center;
 }
 
 div.questions {
@@ -19,6 +27,8 @@ div.questions {
 
 div.answers {
   height: 50;
+  display: flex;
+  justify-content: space-evenly;  
 }
 
 h1 {
@@ -26,7 +36,23 @@ h1 {
   width: 100%;
 }
 
-main {
+html {
   display: flex;
- 
+  justify-content: space-evenly;
+  align-content: center;
+  vertical-align: auto;
+  align-self: center;
+}
+
+@media all AND (min-width: 600px) {
+
+  div {
+    width: auto;
+  }
+
+  img {
+    width: 500px;
+    height: auto;
+  }
+
 }
