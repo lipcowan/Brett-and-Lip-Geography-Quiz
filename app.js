@@ -112,10 +112,12 @@ function buttonClickingHandler() {
       answerScreen = false;
 
     }
-    else if (i == questions.length-1){ //if on end screen
-      i = 0;
-      render(i, 'welcome');
+    else if (i == questions.length-2){ //if on end screen
+      grader(i,answer);
+      render(i, 'end');
       answerScreen = false;
+      i = 0;
+      STORE.score = 0;
     }
     else {
       console.log('worked', i);
@@ -213,7 +215,7 @@ function getEnd() {
   const endScreen = `
   <div class="box">
     <div class="stats">
-      <p>Score: ${STORE.score}</p>
+      <p>Score: ${STORE.score}/${questions.length -2}</p>
     </div>
     <div class="pictureBox"><img height = 300px width = 300px src="images/thatsall.jpg"></div>
     <div class="question">Congratulations! You've completed the quiz.</div>
