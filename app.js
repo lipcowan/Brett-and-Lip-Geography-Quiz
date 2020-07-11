@@ -112,7 +112,7 @@ function buttonClickingHandler() {
       answerScreen = false;
 
     }
-    else if (i == questions.length-2){ //if on end screen
+    else if (i == questions.length-1){ //if on end screen
       grader(i,answer);
       render(i, 'end');
       answerScreen = false;
