@@ -12,7 +12,7 @@ let questions = [  //theme: geography
   },
   { //question 1
     image: 'images/canada.jpg',
-    question: 'Which if the following is a country?',
+    question: 'Which of the following is a country?',
     answers: [
       'Illinois',
       'Africa',
@@ -139,7 +139,7 @@ function buttonClickingHandler() {
 
 function getWelcome() {
   const welcomeScreen = `<div class="box">
-  <div class="pictureBox"><img height = 300px width = 300px src="images/welcome.jpg"></div>
+  <div class="pictureBox"><img width= 300 src="images/welcome.jpg" alt="welcome"></div>
   <form>
   <div>
     <button class="submit">Start Game!
@@ -158,18 +158,18 @@ function getQuestion(i) {
     <p>Question# ${i} of ${questions.length - 2}</p>
     <p>Score: ${STORE.score}</p>
   </div>
-  <div class="pictureBox"><img height = 300px width = 300px src="images/question.jpg"></div>
+  <div class="pictureBox"><img width= 300 src="images/question.jpg" alt="Question"></div>
   <div class="question">${questions[i].question}</div>
 <form>
   <div class= "answers">
     <input type="radio" id="optionA" name="option" value="${questions[i].answers[0]}">
-    <label for="male"> ${questions[i].answers[0]} </label><br>
+    <label for="optionA"> ${questions[i].answers[0]} </label><br>
     <input type="radio" id="optionB" name="option" value="${questions[i].answers[1]}">
-    <label for="female"> ${questions[i].answers[1]} </label><br>
+    <label for="optionB"> ${questions[i].answers[1]} </label><br>
     <input type="radio" id="optionC" name="option" value="${questions[i].answers[2]}">
-    <label for="other"> ${questions[i].answers[2]} </label>
+    <label for="optionC"> ${questions[i].answers[2]} </label>
     <input type="radio" id="optionD" name="option" value="${questions[i].answers[3]}">
-    <label for="other"> ${questions[i].answers[3]} </label>
+    <label for="optionD"> ${questions[i].answers[3]} </label>
   </div>
   <div>
     <button class="submit">${questions[i].buttonText}
@@ -187,18 +187,18 @@ function getRightAnswer(i) {
       <p>Question# ${i} of ${questions.length - 2}</p>
       <p>Score: ${STORE.score}</p>
     </div>
-    <div class="pictureBox"><img height = 300px width = 300px src="${questions[i].image}"></div>
+    <div class="pictureBox"><img width= 300 src="${questions[i].image}" alt="${questions[i].image}"></div>
     <div class="question correct">The correct answer was ${questions[i].correctAnswer}</div>
   <form>
     <div class= "answers">
       <input type="radio" id="optionA" name="option" value="${questions[i].answers[0]}" disabled>
-      <label for="male">${questions[i].answers[0]}</label><br>
+      <label for="optionA">${questions[i].answers[0]}</label><br>
       <input type="radio" id="optionB" name="option" value="${questions[i].answers[1]}" disabled >
-      <label for="female">${questions[i].answers[1]}</label><br>
+      <label for="optionB">${questions[i].answers[1]}</label><br>
       <input type="radio" id="optionC" name="option" value="${questions[i].answers[2]}" disabled>
-      <label for="other">${questions[i].answers[2]}</label>
+      <label for="optionC">${questions[i].answers[2]}</label>
       <input type="radio" id="optionD" name="option" value="${questions[i].answers[3]}" disabled>
-      <label for="other">${questions[i].answers[3]}</label>
+      <label for="optionD">${questions[i].answers[3]}</label>
     </div>
     <div>
       <button class="submit">Next Question
@@ -216,18 +216,18 @@ function getWrongAnswer(i) {
       <p>Question# ${i} of ${questions.length - 2}</p>
       <p>Score: ${STORE.score}</p>
     </div>
-    <div class="pictureBox"><img height = 300px width = 300px src="${questions[i].image}"></div>
+    <div class="pictureBox"><img width = 300 src="${questions[i].image}" alt="${questions[i].image}"></div>
     <div class="question incorrect">The correct answer was ${questions[i].correctAnswer}</div>
   <form>
     <div class= "answers">
       <input type="radio" id="optionA" name="option" value="${questions[i].answers[0]}" disabled>
-      <label for="male">${questions[i].answers[0]}</label><br>
+      <label for="optionA">${questions[i].answers[0]}</label><br>
       <input type="radio" id="optionB" name="option" value="${questions[i].answers[1]}" disabled >
-      <label for="female">${questions[i].answers[1]}</label><br>
+      <label for="optionB">${questions[i].answers[1]}</label><br>
       <input type="radio" id="optionC" name="option" value="${questions[i].answers[2]}" disabled>
-      <label for="other">${questions[i].answers[2]}</label>
+      <label for="optionC">${questions[i].answers[2]}</label>
       <input type="radio" id="optionD" name="option" value="${questions[i].answers[3]}" disabled>
-      <label for="other">${questions[i].answers[3]}</label>
+      <label for="optionD">${questions[i].answers[3]}</label>
     </div>
     <div>
       <button class="submit">Next Question
@@ -251,7 +251,7 @@ function getEnd() {
       <p></p>
       <p>Score: ${STORE.score}/${questions.length -2}</p>
     </div>
-    <div class="pictureBox"><img height = 300px width = 300px src="images/thatsall.jpg"></div>
+    <div class="pictureBox"><img width = 300 src="images/thatsall.jpg" alt="The End"></div>
     <div class="question">Congratulations! You've completed the quiz.</div>
   <form>
     <div>
@@ -265,7 +265,7 @@ function getEnd() {
 
 function render(i, screen) {
 
-  $('h1').html(`<div>Geography Quiz</div>`);
+  $('h1').html(`Geography Quiz`);
   switch (screen) {
     case "welcome":
       $('main').html(getWelcome(i));
