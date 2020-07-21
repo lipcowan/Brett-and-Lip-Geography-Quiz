@@ -1,138 +1,157 @@
 /* eslint-disable no-undef */
-'use strict';
 
-let questions = [  //theme: geography
-  { //welcome screen
-    image: 'images/welcome.jpg',
-    question: 'Welcome',
-    answers: ['1', '2', '3', '4'],
-    correctAnswer: '',
-    buttonText: 'Start Game!'
-
+let questions = [
+  //theme: geography
+  {
+    //welcome screen
+    image: "images/welcome.jpg",
+    question: "Welcome",
+    answers: ["1", "2", "3", "4"],
+    correctAnswer: "",
+    buttonText: "Start Game!",
   },
-  { //question 1
-    image: 'images/canada.jpg',
-    question: 'Which of the following is a country?',
-    answers: [
-      'Illinois',
-      'Africa',
-      'Canada',
-      'Fred'
-    ],
-    correctAnswer: 'Canada',
-    buttonText: 'Submit'
+  {
+    //question 1
+    image: "images/canada.jpg",
+    question: "Which of the following is a country?",
+    answers: ["Illinois", "Africa", "Canada", "Fred"],
+    correctAnswer: "Canada",
+    buttonText: "Submit",
   },
-  {//question 2
-    image: 'images/concord.jpg',
-    question: 'What is the capital of New Hampshire?',
-    answers: [
-      'Manchester',
-      'Nashua',
-      'Concord',
-      'Istanbul'
-    ],
-    correctAnswer: 'Concord',
-    buttonText: 'Submit'
+  {
+    //question 2
+    image: "images/concord.jpg",
+    question: "What is the capital of New Hampshire?",
+    answers: ["Manchester", "Nashua", "Concord", "Istanbul"],
+    correctAnswer: "Concord",
+    buttonText: "Submit",
   },
-  {//question 3
-    image: 'images/australia.jpg',
-    question: 'Which of these is a country AND a continent?',
-    answers: [
-      'Australia',
-      'Antarctica',
-      'North America',
-      'South America'
-    ],
-    correctAnswer: 'Australia',
-    buttonText: 'Submit'
+  {
+    //question 3
+    image: "images/australia.jpg",
+    question: "Which of these is a country AND a continent?",
+    answers: ["Australia", "Antarctica", "North America", "South America"],
+    correctAnswer: "Australia",
+    buttonText: "Submit",
   },
-  {//question 4
-    image: 'images/russia.jpg',
-    question: 'Which Country is the largest? (area)',
-    answers: [
-      'USA',
-      'Canada',
-      'Russia',
-      'India'
-    ],
-    correctAnswer: 'Russia',
-    buttonText: 'Submit'
+  {
+    //question 4
+    image: "images/russia.jpg",
+    question: "Which Country is the largest? (area)",
+    answers: ["USA", "Canada", "Russia", "India"],
+    correctAnswer: "Russia",
+    buttonText: "Submit",
   },
-  {//quation 5
-    image: 'images/china.jpg',
-    question: 'Which country has the largest population?',
-    answers: [
-      'India',
-      'Russia',
-      'Japan',
-      'China'
-    ],
-    correctAnswer: 'China',
-    buttonText: 'Submit'
+  {
+    //question 5
+    image: "images/china.jpg",
+    question: "Which country has the largest population?",
+    answers: ["India", "Russia", "Japan", "China"],
+    correctAnswer: "China",
+    buttonText: "Submit",
   },
-  {//end screen
-    image: 'images/thatsall.jpg',
-    question: 'The End! Click to play again!',
-    answers: ['', '', '', ''],
-    correctAnswer: '',
-    buttonText: 'Play again!'
-  }
+  {
+    //end screen
+    image: "images/thatsall.jpg",
+    question: "The End! Click to play again!",
+    answers: ["", "", "", ""],
+    correctAnswer: "",
+    buttonText: "Play again!",
+  },
 ];
 
 const STORE = {
   quizStarted: false,
   questionNumber: 0,
-  score: 0
+  score: 0,
 };
 
-let i = 0;
-let answerScreen = false;
-// -----
-
 function main() {
-
-  render(i, "welcome")
-  buttonClickingHandler();
+  render(STORE.questionNumber, "welcome");
+  eventListeners();
+}
+function eventListeners() {
+  $("html").on("click", "#submitAnswer", function (event) {
+    handleSubmitAnswerClicked(event);
+  });
+  $("html").on("click", "#nextQuestion", function (event) {
+    handleNextQuestionClicked(event);
+  });
+  $("html").on("click", "#startGame", function (event) {
+    handleStartGameClicked(event);
+  });
+  $("html").on("click", "#newGame", function (event) {
+    handleNewGameClicked(event);
+  });
 }
 
-function buttonClickingHandler() {
-  $('html').on('click', 'button', function (event) {
-    event.preventDefault();
-    let answer = $("input[name='option']:checked").val();
+function handleSubmitAnswerClicked(event) {
+  event.preventDefault();
+  let answer = $("input[name='option']:checked").val();
+  if (!answer) alert("Please select an answer from below");
+  if (grader(STORE.questionNumber, answer))
+    render(STORE.questionNumber, "correct");
+  else render(STORE.questionNumber, "incorrect");
+}
 
-    if (!answer && i > 0 && i < questions.length - 2 && answerScreen == false) { // if no answer
-      alert('Please select an answer from below');
-    }
-    else if (i == 0){ // if on welcome screen
-      i++;
-      render(i, "question");
-      answerScreen = false;
+function handleNextQuestionClicked(event) {
+  event.preventDefault();
+  STORE.questionNumber = STORE.questionNumber + 1;
+  if (STORE.questionNumber < questions.length - 2)
+    render(STORE.questionNumber, "question");
+  else render(STORE.questionNumber, "end");
+}
 
-    }
-    else if (i == questions.length - 2 && !answer){ //if on end screen
-      //grader(i,answer);
-      render(i, 'end');
-      answerScreen = false;
-      i = 0;
-      STORE.score = 0;
-    }
-    else {
-      console.log('worked', i);
-      let rightWrong = (grader(i, answer));
+function handleStartGameClicked(event) {
+  event.preventDefault();
+  STORE.questionNumber = 1;
+  render(STORE.questionNumber, "question");
+}
 
-      if (answerScreen) {
-          i++;
-          render(i, "question");
-          answerScreen = false;
-       }
-      else {
-        if (rightWrong) render(i, "correct");
-        else render(i, "incorrect");
-        answerScreen = true;
-      }
+function handleNewGameClicked(event) {
+  event.preventDefault();
+  STORE.questionNumber = 0;
+  render(STORE.questionNumber, "welcome");
+}
 
-    }
-  });
+function render(i, screen) {
+  $("h1").html(`Geography Quiz`);
+  switch (screen) {
+    case "welcome":
+      $("main").html(getWelcome(i));
+      break;
+    case "question":
+      $("main").html(getQuestion(i));
+      break;
+    case "correct":
+      $("main").html(getRightAnswer(i));
+      break;
+    case "incorrect":
+      $("main").html(getWrongAnswer(i));
+      break;
+    case "end":
+      $("main").html(getEnd(i));
+      break;
+    default:
+      $("main").html(getWelcome(i));
+      break;
+  }
+
+  $("main").html();
+}
+
+function grader(i, answer) {
+  console.log(answer, questions[i].correctAnswer);
+
+  if (answer == questions[i].correctAnswer) {
+    STORE.score = STORE.score + 1;
+    console.log(STORE.score);
+    //alert("Correct!");
+  } else {
+    //alert(`Sorry the correct answer is: ${questions[i].correctAnswer}`);
+  }
+  return answer == questions[i].correctAnswer;
+  // return true/false
 }
 
 // ---
@@ -142,7 +161,7 @@ function getWelcome() {
   <div class="pictureBox"><img width= 300 src="images/welcome.jpg" alt="welcome"></div>
   <form>
   <div>
-    <button class="submit">Start Game!
+    <button id="startGame">Start Game!
     </button>
   </div>
 </form> 
@@ -162,17 +181,25 @@ function getQuestion(i) {
   <div class="question">${questions[i].question}</div>
 <form>
   <div class= "answers">
-    <input type="radio" id="optionA" name="option" value="${questions[i].answers[0]}">
+    <input type="radio" id="optionA" name="option" value="${
+      questions[i].answers[0]
+    }">
     <label for="optionA"> ${questions[i].answers[0]} </label><br>
-    <input type="radio" id="optionB" name="option" value="${questions[i].answers[1]}">
+    <input type="radio" id="optionB" name="option" value="${
+      questions[i].answers[1]
+    }">
     <label for="optionB"> ${questions[i].answers[1]} </label><br>
-    <input type="radio" id="optionC" name="option" value="${questions[i].answers[2]}">
+    <input type="radio" id="optionC" name="option" value="${
+      questions[i].answers[2]
+    }">
     <label for="optionC"> ${questions[i].answers[2]} </label>
-    <input type="radio" id="optionD" name="option" value="${questions[i].answers[3]}">
+    <input type="radio" id="optionD" name="option" value="${
+      questions[i].answers[3]
+    }">
     <label for="optionD"> ${questions[i].answers[3]} </label>
   </div>
   <div>
-    <button class="submit">${questions[i].buttonText}
+    <button id="submitAnswer">${questions[i].buttonText}
     </button>
   </div>
 </form> 
@@ -187,25 +214,37 @@ function getRightAnswer(i) {
       <p>Question# ${i} of ${questions.length - 2}</p>
       <p>Score: ${STORE.score}</p>
     </div>
-    <div class="pictureBox"><img width= 300 src="${questions[i].image}" alt="${questions[i].image}"></div>
-    <div class="question correct">The correct answer was ${questions[i].correctAnswer}</div>
+    <div class="pictureBox"><img width= 300 src="${questions[i].image}" alt="${
+    questions[i].image
+  }"></div>
+    <div class="question correct">The correct answer was ${
+      questions[i].correctAnswer
+    }</div>
   <form>
     <div class= "answers">
-      <input type="radio" id="optionA" name="option" value="${questions[i].answers[0]}" disabled>
+      <input type="radio" id="optionA" name="option" value="${
+        questions[i].answers[0]
+      }" disabled>
       <label for="optionA">${questions[i].answers[0]}</label><br>
-      <input type="radio" id="optionB" name="option" value="${questions[i].answers[1]}" disabled >
+      <input type="radio" id="optionB" name="option" value="${
+        questions[i].answers[1]
+      }" disabled >
       <label for="optionB">${questions[i].answers[1]}</label><br>
-      <input type="radio" id="optionC" name="option" value="${questions[i].answers[2]}" disabled>
+      <input type="radio" id="optionC" name="option" value="${
+        questions[i].answers[2]
+      }" disabled>
       <label for="optionC">${questions[i].answers[2]}</label>
-      <input type="radio" id="optionD" name="option" value="${questions[i].answers[3]}" disabled>
+      <input type="radio" id="optionD" name="option" value="${
+        questions[i].answers[3]
+      }" disabled>
       <label for="optionD">${questions[i].answers[3]}</label>
     </div>
     <div>
-      <button class="submit">Next Question
+      <button id="nextQuestion">Next Question
       </button>
     </div>
   </form> 
-  </div>`
+  </div>`;
   return answerTemplate;
 }
 
@@ -216,46 +255,52 @@ function getWrongAnswer(i) {
       <p>Question# ${i} of ${questions.length - 2}</p>
       <p>Score: ${STORE.score}</p>
     </div>
-    <div class="pictureBox"><img width = 300 src="${questions[i].image}" alt="${questions[i].image}"></div>
-    <div class="question incorrect">The correct answer was ${questions[i].correctAnswer}</div>
+    <div class="pictureBox"><img width = 300 src="${questions[i].image}" alt="${
+    questions[i].image
+  }"></div>
+    <div class="question incorrect">The correct answer was ${
+      questions[i].correctAnswer
+    }</div>
   <form>
     <div class= "answers">
-      <input type="radio" id="optionA" name="option" value="${questions[i].answers[0]}" disabled>
+      <input type="radio" id="optionA" name="option" value="${
+        questions[i].answers[0]
+      }" disabled>
       <label for="optionA">${questions[i].answers[0]}</label><br>
-      <input type="radio" id="optionB" name="option" value="${questions[i].answers[1]}" disabled >
+      <input type="radio" id="optionB" name="option" value="${
+        questions[i].answers[1]
+      }" disabled >
       <label for="optionB">${questions[i].answers[1]}</label><br>
-      <input type="radio" id="optionC" name="option" value="${questions[i].answers[2]}" disabled>
+      <input type="radio" id="optionC" name="option" value="${
+        questions[i].answers[2]
+      }" disabled>
       <label for="optionC">${questions[i].answers[2]}</label>
-      <input type="radio" id="optionD" name="option" value="${questions[i].answers[3]}" disabled>
+      <input type="radio" id="optionD" name="option" value="${
+        questions[i].answers[3]
+      }" disabled>
       <label for="optionD">${questions[i].answers[3]}</label>
     </div>
     <div>
-      <button class="submit">Next Question
+      <button id="nextQuestion">Next Question
       </button>
     </div>
   </form> 
-  </div>`
+  </div>`;
   return answerTemplate;
 }
-
-
-
-  
-
-
 
 function getEnd() {
   const endScreen = `
   <div class="box">
     <div class="stats">
       <p></p>
-      <p>Score: ${STORE.score}/${questions.length -2}</p>
+      <p>Score: ${STORE.score}/${questions.length - 2}</p>
     </div>
     <div class="pictureBox"><img width = 300 src="images/thatsall.jpg" alt="The End"></div>
     <div class="question">Congratulations! You've completed the quiz.</div>
   <form>
     <div>
-      <button class="submit">Start Over?
+      <button id="newGame">Start Over?
       </button>
     </div>
   </form> 
@@ -263,58 +308,7 @@ function getEnd() {
   return endScreen;
 }
 
-function render(i, screen) {
-
-  $('h1').html(`Geography Quiz`);
-  switch (screen) {
-    case "welcome":
-      $('main').html(getWelcome(i));
-      break;
-    case "question":
-      $('main').html(getQuestion(i));
-      break;
-    case "correct":
-      $('main').html(getRightAnswer(i));
-      break;
-    case "incorrect":
-      $('main').html(getWrongAnswer(i));
-      break;
-    case "end":
-      $('main').html(getEnd(i));
-      break;
-    default:
-      $('main').html(getWelcome(i));
-      break;
-  }
-
-
-
-  $('main').html();
-}
-
-
-// $('.pictureBox').html(answerTemplate);
-
-
-function grader(i, answer) {
-  console.log(answer, questions[i].correctAnswer);
-
-  if (answer == questions[i].correctAnswer) {
-    STORE.score = STORE.score + 1;
-    console.log(STORE.score);
-    //alert("Correct!");
-  }
-  else {
-    //alert(`Sorry the correct answer is: ${questions[i].correctAnswer}`);
-  }
-  return (answer == questions[i].correctAnswer);
-  // return true/false
-}
-
 $(main);
-
-
-
 
 /*
 
@@ -336,7 +330,7 @@ function QuestionScreen
   * pulling from a correctAnswers array
 
 
-  function runningScore  - desplayed on all question screens
+  function runningScore  - displayed on all question screens
    * correct answers / index#
 
 
@@ -368,7 +362,6 @@ currentScore
 /********** EVENT HANDLER FUNCTIONS **********/
 
 // These functions handle events (submit, click, etc)
-
 
 /* HTML WireFrame */
 
