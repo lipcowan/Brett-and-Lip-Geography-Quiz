@@ -1,69 +1,68 @@
 /* eslint-disable no-undef */
 
-let questions = [
-  //theme: geography
-  {
-    //welcome screen
-    image: "images/welcome.jpg",
-    question: "Welcome",
-    answers: ["1", "2", "3", "4"],
-    correctAnswer: "",
-    buttonText: "Start Game!",
-  },
-  {
-    //question 1
-    image: "images/canada.jpg",
-    question: "Which of the following is a country?",
-    answers: ["Illinois", "Africa", "Canada", "Fred"],
-    correctAnswer: "Canada",
-    buttonText: "Submit",
-  },
-  {
-    //question 2
-    image: "images/concord.jpg",
-    question: "What is the capital of New Hampshire?",
-    answers: ["Manchester", "Nashua", "Concord", "Istanbul"],
-    correctAnswer: "Concord",
-    buttonText: "Submit",
-  },
-  {
-    //question 3
-    image: "images/australia.jpg",
-    question: "Which of these is a country AND a continent?",
-    answers: ["Australia", "Antarctica", "North America", "South America"],
-    correctAnswer: "Australia",
-    buttonText: "Submit",
-  },
-  {
-    //question 4
-    image: "images/russia.jpg",
-    question: "Which Country is the largest? (area)",
-    answers: ["USA", "Canada", "Russia", "India"],
-    correctAnswer: "Russia",
-    buttonText: "Submit",
-  },
-  {
-    //question 5
-    image: "images/china.jpg",
-    question: "Which country has the largest population?",
-    answers: ["India", "Russia", "Japan", "China"],
-    correctAnswer: "China",
-    buttonText: "Submit",
-  },
-  {
-    //end screen
-    image: "images/thatsall.jpg",
-    question: "The End! Click to play again!",
-    answers: ["", "", "", ""],
-    correctAnswer: "",
-    buttonText: "Play again!",
-  },
-];
-
 const STORE = {
   quizStarted: false,
   questionNumber: 0,
   score: 0,
+  questions: [
+    //theme: geography
+    {
+      //welcome screen
+      image: "images/welcome.jpg",
+      question: "Welcome",
+      answers: ["1", "2", "3", "4"],
+      correctAnswer: "",
+      buttonText: "Start Game!",
+    },
+    {
+      //question 1
+      image: "images/canada.jpg",
+      question: "Which of the following is a country?",
+      answers: ["Illinois", "Africa", "Canada", "Fred"],
+      correctAnswer: "Canada",
+      buttonText: "Submit",
+    },
+    {
+      //question 2
+      image: "images/concord.jpg",
+      question: "What is the capital of New Hampshire?",
+      answers: ["Manchester", "Nashua", "Concord", "Istanbul"],
+      correctAnswer: "Concord",
+      buttonText: "Submit",
+    },
+    {
+      //question 3
+      image: "images/australia.jpg",
+      question: "Which of these is a country AND a continent?",
+      answers: ["Australia", "Antarctica", "North America", "South America"],
+      correctAnswer: "Australia",
+      buttonText: "Submit",
+    },
+    {
+      //question 4
+      image: "images/russia.jpg",
+      question: "Which Country is the largest? (area)",
+      answers: ["USA", "Canada", "Russia", "India"],
+      correctAnswer: "Russia",
+      buttonText: "Submit",
+    },
+    {
+      //question 5
+      image: "images/china.jpg",
+      question: "Which country has the largest population?",
+      answers: ["India", "Russia", "Japan", "China"],
+      correctAnswer: "China",
+      buttonText: "Submit",
+    },
+    {
+      //end screen
+      image: "images/thatsall.jpg",
+      question: "The End! Click to play again!",
+      answers: ["", "", "", ""],
+      correctAnswer: "",
+      buttonText: "Play again!",
+    }
+  ]
 };
 
 function main() {
@@ -97,7 +96,7 @@ function handleSubmitAnswerClicked(event) {
 function handleNextQuestionClicked(event) {
   event.preventDefault();
   STORE.questionNumber = STORE.questionNumber + 1;
-  if (STORE.questionNumber < questions.length - 2)
+  if (STORE.questionNumber < STORE.questions.length - 1)
     render(STORE.questionNumber, "question");
   else render(STORE.questionNumber, "end");
 }
@@ -141,16 +140,16 @@ function render(i, screen) {
 }
 
 function grader(i, answer) {
-  console.log(answer, questions[i].correctAnswer);
+  console.log(answer, STORE.questions[i].correctAnswer);
 
-  if (answer == questions[i].correctAnswer) {
+  if (answer == STORE.questions[i].correctAnswer) {
     STORE.score = STORE.score + 1;
     console.log(STORE.score);
     //alert("Correct!");
   } else {
     //alert(`Sorry the correct answer is: ${questions[i].correctAnswer}`);
   }
-  return answer == questions[i].correctAnswer;
+  return answer == STORE.questions[i].correctAnswer;
   // return true/false
 }
 
@@ -174,32 +173,32 @@ function getQuestion(i) {
   const questionTemplate = `
 <div class="box">
   <div class="stats">
-    <p>Question# ${i} of ${questions.length - 2}</p>
+    <p>Question# ${i} of ${STORE.questions.length - 2}</p>
     <p>Score: ${STORE.score}</p>
   </div>
   <div class="pictureBox"><img width= 300 src="images/question.jpg" alt="Question"></div>
-  <div class="question">${questions[i].question}</div>
+  <div class="question">${STORE.questions[i].question}</div>
 <form>
   <div class= "answers">
     <input type="radio" id="optionA" name="option" value="${
-      questions[i].answers[0]
+      STORE.questions[i].answers[0]
     }">
-    <label for="optionA"> ${questions[i].answers[0]} </label><br>
+    <label for="optionA"> ${STORE.questions[i].answers[0]} </label><br>
     <input type="radio" id="optionB" name="option" value="${
-      questions[i].answers[1]
+      STORE.questions[i].answers[1]
     }">
-    <label for="optionB"> ${questions[i].answers[1]} </label><br>
+    <label for="optionB"> ${STORE.questions[i].answers[1]} </label><br>
     <input type="radio" id="optionC" name="option" value="${
-      questions[i].answers[2]
+      STORE.questions[i].answers[2]
     }">
-    <label for="optionC"> ${questions[i].answers[2]} </label>
+    <label for="optionC"> ${STORE.questions[i].answers[2]} </label>
     <input type="radio" id="optionD" name="option" value="${
-      questions[i].answers[3]
+      STORE.questions[i].answers[3]
     }">
-    <label for="optionD"> ${questions[i].answers[3]} </label>
+    <label for="optionD"> ${STORE.questions[i].answers[3]} </label>
   </div>
   <div>
-    <button id="submitAnswer">${questions[i].buttonText}
+    <button id="submitAnswer">${STORE.questions[i].buttonText}
     </button>
   </div>
 </form> 
@@ -211,34 +210,14 @@ function getRightAnswer(i) {
   const answerTemplate = `
   <div class="box">
     <div class="stats">
-      <p>Question# ${i} of ${questions.length - 2}</p>
+      <p>Question# ${i} of ${STORE.questions.length - 2}</p>
       <p>Score: ${STORE.score}</p>
     </div>
-    <div class="pictureBox"><img width= 300 src="${questions[i].image}" alt="${
-    questions[i].image
+    <div class="pictureBox"><img width= 300 src="${STORE.questions[i].image}" alt="${
+    STORE.questions[i].image
   }"></div>
-    <div class="question correct">The correct answer was ${
-      questions[i].correctAnswer
-    }</div>
+    <div class="question correct">GREAT JOB! ${STORE.questions[i].correctAnswer} was the correct answer</div>
   <form>
-    <div class= "answers">
-      <input type="radio" id="optionA" name="option" value="${
-        questions[i].answers[0]
-      }" disabled>
-      <label for="optionA">${questions[i].answers[0]}</label><br>
-      <input type="radio" id="optionB" name="option" value="${
-        questions[i].answers[1]
-      }" disabled >
-      <label for="optionB">${questions[i].answers[1]}</label><br>
-      <input type="radio" id="optionC" name="option" value="${
-        questions[i].answers[2]
-      }" disabled>
-      <label for="optionC">${questions[i].answers[2]}</label>
-      <input type="radio" id="optionD" name="option" value="${
-        questions[i].answers[3]
-      }" disabled>
-      <label for="optionD">${questions[i].answers[3]}</label>
-    </div>
     <div>
       <button id="nextQuestion">Next Question
       </button>
@@ -252,34 +231,16 @@ function getWrongAnswer(i) {
   const answerTemplate = `
   <div class="box">
     <div class="stats">
-      <p>Question# ${i} of ${questions.length - 2}</p>
+      <p>Question# ${i} of ${STORE.questions.length - 2}</p>
       <p>Score: ${STORE.score}</p>
     </div>
-    <div class="pictureBox"><img width = 300 src="${questions[i].image}" alt="${
-    questions[i].image
+    <div class="pictureBox"><img width = 300 src="${STORE.questions[i].image}" alt="${
+    STORE.questions[i].image
   }"></div>
-    <div class="question incorrect">The correct answer was ${
-      questions[i].correctAnswer
+    <div class="question incorrect">INCORRECT: The correct answer was ${
+      STORE.questions[i].correctAnswer
     }</div>
   <form>
-    <div class= "answers">
-      <input type="radio" id="optionA" name="option" value="${
-        questions[i].answers[0]
-      }" disabled>
-      <label for="optionA">${questions[i].answers[0]}</label><br>
-      <input type="radio" id="optionB" name="option" value="${
-        questions[i].answers[1]
-      }" disabled >
-      <label for="optionB">${questions[i].answers[1]}</label><br>
-      <input type="radio" id="optionC" name="option" value="${
-        questions[i].answers[2]
-      }" disabled>
-      <label for="optionC">${questions[i].answers[2]}</label>
-      <input type="radio" id="optionD" name="option" value="${
-        questions[i].answers[3]
-      }" disabled>
-      <label for="optionD">${questions[i].answers[3]}</label>
-    </div>
     <div>
       <button id="nextQuestion">Next Question
       </button>
@@ -294,10 +255,10 @@ function getEnd() {
   <div class="box">
     <div class="stats">
       <p></p>
-      <p>Score: ${STORE.score}/${questions.length - 2}</p>
+      <p>Score: ${STORE.score}/${STORE.questions.length - 2}</p>
     </div>
     <div class="pictureBox"><img width = 300 src="images/thatsall.jpg" alt="The End"></div>
-    <div class="question">Congratulations! You've completed the quiz.</div>
+    <div class="question">Congratulations! You've completed the quiz. You got ${STORE.score} questions right, would you like to take it again?</div>
   <form>
     <div>
       <button id="newGame">Start Over?
